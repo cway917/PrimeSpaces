@@ -37,7 +37,7 @@ The Worker verifies Access JWT signatures, issuer, audience, expiry and the expl
 
 ## PrimeSpaces accounts
 
-Cloudflare hosting membership and PrimeSpaces application membership are separate. `carla@primespaces.org` owns hosting; it has not been promoted to marketplace admin by this change. The existing marketplace owner remains the configured email `cway781@gmail.com`.
+Cloudflare hosting membership and PrimeSpaces application membership are separate. At the owner's request, `carla@primespaces.org` is now the primary PrimeSpaces owner/admin email as well as the Cloudflare hosting email. Create the Supabase Auth login with this business address. The original `cway781@gmail.com` admin membership is retained for the existing Sites pilot, preserving its access and records.
 
 Create the first matching Supabase Auth account using **Authentication → Users → Add user → Create new user**, choosing its password in the Supabase dashboard. No account is created automatically by this source update and no invitation email is sent by the deployment. If the dashboard offers email confirmation, complete/confirm it before signing in. Do not share passwords or service-role keys in chat or commit them. Authorized users sign in at `/signin` with an invited, confirmed Supabase email/password account. There is no public signup form.
 
