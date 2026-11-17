@@ -1,0 +1,57 @@
+# PrimeSpaces private marketplace
+
+Working renter, facility and admin application using the original PrimeSpaces logo, navy/teal palette and marketplace positioning from `cway917/PrimeSpaces`.
+
+Source home: `marketplace/private-pilot/` in [cway917/PrimeSpaces](https://github.com/cway917/PrimeSpaces). The repository-root GitHub Pages marketing site remains separate from this server application.
+
+Private deployment: https://primespaces-private-pilot.charter-one-3074.chatgpt.site
+
+## Run and build
+
+Requires Node 22.13+ and npm. From this directory:
+
+```sh
+npm ci
+npm run typecheck
+npm run build
+```
+
+For local UI development: `npm run dev`. The portable development profile uses the starter's local mock identity; it has no production membership. The managed preview requires a real Sites identity. Do not bypass production identity to make a preview work.
+
+`npm run assets` copies the existing logo from `../../assets/logo.png`, or downloads that same repository asset when running outside the monorepo. It downloads the illustrative venue photos only if missing. `curl` is used as a fallback on networks requiring a proxy. Generated photos and logo copies do not need to be committed. The existing root logo is the branding source.
+
+## Hosting and privacy
+
+Built with React, TypeScript and Vinext's Next.js-compatible App Router, compiled to a Cloudflare Worker through the included Sites integration. GitHub Pages cannot run its server routes or protect its runtime secrets. Keeping the source in GitHub does not move the app's runtime to Pages.
+
+The existing Sites project in `.openai/hosting.json` remains the owner-only authenticated host. Preserve that project's audience. Do not add a public deployment or public marketplace link until approved. No automatic production deployment is configured by this migration.
+
+Sites runtime secrets: `SUPABASE_URL`, `SUPABASE_PUBLISHABLE_KEY`, `PRIMESPACES_SERVER_TOKEN`. Set these through the host's secret manager; never commit their values. `.env*`, `.dev.vars*`, local runtime state and build output are ignored. No service-role key is used in the browser or stored in this source.
+
+## Supabase
+
+The existing PrimeSpaces Supabase project is already provisioned with the pilot schema and sample records. Do not rerun schema or seed SQL against it. Files under `supabase/` are reference source and regression verification, not a startup migration runner. No database change is required for this branding/source migration.
+
+`primespaces_private` is not exposed to the Data API. Its tables deny direct access and enable RLS. The public invoker RPC delegates to a private definer function that validates the server credential and server-supplied Sites identity on every operation. Roles and organization membership are database controlled. Only the configured owner can bootstrap as admin. Other participants require both an explicit private Site invitation and database membership; changing navigation does not grant a role.
+
+For a separate environment, review and apply `supabase/pilot-schema.sql`, configure a new high-entropy server token through the host secret manager, and store only its SHA-256 hash and the approved owner email in `primespaces_private.config`. Sample seed data is optional and must remain visibly marked. Do not reuse a production credential in development.
+
+## Workflows
+
+- Search facilities by location/text, date, guests, organization kind and price. Inspect hours, amenities, rules and available intervals.
+- Submit requests for manual review or reserve an available time under a facility's automatic approval policy. Rates, capacity, opening hours and conflicts are checked transactionally in Supabase. Facility locks serialize approvals and requests; request keys prevent duplicates.
+- Facility teams manage listings and hours, block/unblock time, approve/decline requests, and complete past events. Renters can cancel future requests/reservations.
+- Facility teams and admins can view/export consolidated monthly statements. Admins record holds, review notes and decisions in an audit trail before any future payout.
+- Commission is 10% of the base rental, deducted from facility proceeds. The renter platform fee is $0. Prices use integer cents and per-booking rounding.
+
+## Payment guard
+
+This is an unpaid private pilot. There is no Stripe integration, payment action, connected-account onboarding, charge or transfer. The database allows only `payment_status=disabled`. Available-for-payout remains $0. Approval reserves a calendar interval, not a paid booking. Admin review records a decision and cannot release money.
+
+## Pilot scope and validation
+
+Arizona / America/Phoenix; single-day bookings of 1–12 hours within one year; one daily opening interval on selected weekdays; base hourly pricing. Sample facilities and bookings are labeled. Taxes, deposits, add-ons, insurance, agreements, notifications and payments remain future integrations. Editing opening hours does not cancel existing approved bookings.
+
+See `VALIDATION.md` for checks actually performed and browser verification limits. The existing `marketplace/db/001_foundation.sql` and architecture notes outside this folder describe the earlier foundation/future paid platform; they do not replace the deployed private-pilot schema.
+
+Photos are illustrative Unsplash images, not photographs of participating facilities.

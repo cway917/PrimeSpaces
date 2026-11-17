@@ -1,4 +1,16 @@
-# PrimeSpaces marketplace foundation
+# PrimeSpaces marketplace
+
+## Working private pilot
+
+The working application source is in [private-pilot/](private-pilot/README.md), using the original PrimeSpaces logo and navy/teal brand. It includes searchable spaces, availability, booking requests, per-facility manual/automatic approval, the 10% facility-side commission, monthly statements and admin review.
+
+The existing private application host remains authenticated and owner-only. GitHub Pages continues to serve the separate marketing homepage. Payments and transfers are disabled. A GitHub source push does not automatically deploy the private application. Build and synchronize the application through its existing private Sites deployment workflow.
+
+The original repository-root `index.html`, `styles.css`, `script.js` and `assets/logo.png` are preserved.
+
+## Earlier foundation and future paid-platform plan
+
+The notes below describe the earlier scaffold and planned paid platform. They are not active payment behavior or instructions to reapply migrations to the existing project. Follow the [private-pilot README](private-pilot/README.md) for the current implementation.
 
 This directory is an isolated starting point for the booking marketplace. The existing GitHub Pages marketing site at the repository root remains unchanged.
 
