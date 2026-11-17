@@ -21,3 +21,7 @@ The server application uses the existing Supabase project and private runtime se
 Follow the [application README](marketplace/private-pilot/README.md) for installation, build, runtime configuration and validation limits. Changing application source on GitHub does not automatically redeploy the private host; application changes must go through the existing private deployment workflow.
 
 No browser-visible service-role keys or server secrets belong in this repository.
+
+## Contact and inquiries
+
+All PrimeSpaces contact and inquiry email links use **info@primespaces.org**. Automatic booking or payout email notifications are not enabled in the current pilot.

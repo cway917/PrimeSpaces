@@ -55,3 +55,7 @@ Arizona / America/Phoenix; single-day bookings of 1–12 hours within one year; 
 See `VALIDATION.md` for checks actually performed and browser verification limits. The existing `marketplace/db/001_foundation.sql` and architecture notes outside this folder describe the earlier foundation/future paid platform; they do not replace the deployed private-pilot schema.
 
 Photos are illustrative Unsplash images, not photographs of participating facilities.
+
+## Contact and inquiries
+
+All PrimeSpaces support, onboarding and listing inquiries go to **info@primespaces.org**. The shared destination is defined in `lib/contact.ts`. Contact links open an email draft addressed to this inbox. Automatic transactional notifications are not enabled; this update does not configure mailbox forwarding or change admin sign-in identities.
