@@ -2,7 +2,7 @@
 
 Working renter, facility and admin application using the original PrimeSpaces logo, navy/teal palette and marketplace positioning from `cway917/PrimeSpaces`.
 
-Source home: `marketplace/private-pilot/` in [cway917/PrimeSpaces](https://github.com/cway917/PrimeSpaces). The repository-root GitHub Pages marketing site remains separate from this server application.
+Source home: `marketplace/private-pilot/` in [cway917/PrimeSpaces](https://github.com/cway917/PrimeSpaces). The repository-root GitHub Pages entry page automatically forwards visitors into this private server application.
 
 Private deployment: https://primespaces-private-pilot.charter-one-3074.chatgpt.site
 
@@ -22,9 +22,9 @@ For local UI development: `npm run dev`. The portable development profile uses t
 
 ## Hosting and privacy
 
-Built with React, TypeScript and Vinext's Next.js-compatible App Router, compiled to a Cloudflare Worker through the included Sites integration. GitHub Pages cannot run its server routes or protect its runtime secrets. Keeping the source in GitHub does not move the app's runtime to Pages.
+Built with React, TypeScript and Vinext's Next.js-compatible App Router, compiled to a Cloudflare Worker through the included Sites integration. GitHub Pages serves the entry page and cannot run the application's server routes or protect its runtime secrets. The GitHub homepage now forwards into the private application; its runtime remains on the authenticated host.
 
-The existing Sites project in `.openai/hosting.json` remains the owner-only authenticated host. Preserve that project's audience. Do not add a public deployment or public marketplace link until approved. No automatic production deployment is configured by this migration.
+The existing Sites project in `.openai/hosting.json` remains the owner-only authenticated host. Preserve that project's audience. Keep the application's existing private access policy. The approved GitHub homepage handoff does not grant anyone access to the application. No automatic production deployment is configured by this migration.
 
 Sites runtime secrets: `SUPABASE_URL`, `SUPABASE_PUBLISHABLE_KEY`, `PRIMESPACES_SERVER_TOKEN`. Set these through the host's secret manager; never commit their values. `.env*`, `.dev.vars*`, local runtime state and build output are ignored. No service-role key is used in the browser or stored in this source.
 

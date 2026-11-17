@@ -4,9 +4,9 @@
 
 The working application source is in [private-pilot/](private-pilot/README.md), using the original PrimeSpaces logo and navy/teal brand. It includes searchable spaces, availability, booking requests, per-facility manual/automatic approval, the 10% facility-side commission, monthly statements and admin review.
 
-The existing private application host remains authenticated and owner-only. GitHub Pages continues to serve the separate marketing homepage. Payments and transfers are disabled. A GitHub source push does not automatically deploy the private application. Build and synchronize the application through its existing private Sites deployment workflow.
+The existing private application host remains authenticated and owner-only. The GitHub Pages homepage now forwards visitors into that private application. Payments and transfers are disabled. A GitHub source push does not automatically deploy the private application. Build and synchronize the application through its existing private Sites deployment workflow.
 
-The original repository-root `index.html`, `styles.css`, `script.js` and `assets/logo.png` are preserved.
+The original marketing `index.html` is preserved in Git history. The repository-root `styles.css`, `script.js` and `assets/logo.png` remain available; the new entry page uses `marketplace-entry.js`.
 
 ## Earlier foundation and future paid-platform plan
 
