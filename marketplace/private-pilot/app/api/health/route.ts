@@ -1,8 +1,14 @@
 import {env} from 'cloudflare:workers';
+import { usesAccountLogin } from '@/lib/account-auth';
+import { marketplace } from '@/lib/marketplace';
 export const dynamic='force-dynamic';
 // Read-only connection check behind the owner-only Sites gate. Returns no records.
 export async function GET(){
  try{
+  if(usesAccountLogin()){
+   const data=await marketplace('state');
+   return Response.json({connected:true,facilityCount:data.facilities.length,paymentsEnabled:false},{headers:{'Cache-Control':'private, no-store'}});
+  }
   const c=env as unknown as Record<string,string>;
   if(!c.SUPABASE_URL||!c.SUPABASE_PUBLISHABLE_KEY||!c.PRIMESPACES_SERVER_TOKEN)throw new Error('configuration');
   const r=await fetch(c.SUPABASE_URL+'/rest/v1/rpc/primespaces_pilot',{method:'POST',headers:{'Content-Type':'application/json',apikey:c.SUPABASE_PUBLISHABLE_KEY},body:JSON.stringify({p_token:c.PRIMESPACES_SERVER_TOKEN,p_actor:'sample-renter',p_email:'renter@example.test',p_name:'Sample community renter',p_action:'state',p:{}}),signal:AbortSignal.timeout(15000)});

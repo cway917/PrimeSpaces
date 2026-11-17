@@ -1,6 +1,12 @@
 import { env } from 'cloudflare:workers';
 import { getChatGPTUser } from '@/app/chatgpt-auth';
+import { accountMarketplace, usesAccountLogin, verifiedAccount } from '@/lib/account-auth';
 export async function marketplace(action: string, payload: unknown = {}) {
+  if (usesAccountLogin()) {
+    const account = await verifiedAccount();
+    if (!account) throw new Error('SIGN_IN_REQUIRED');
+    return accountMarketplace(account.token, action, payload);
+  }
   const user = await getChatGPTUser();
   if (!user) throw new Error('SIGN_IN_REQUIRED');
   const config = env as unknown as Record<string,string>;

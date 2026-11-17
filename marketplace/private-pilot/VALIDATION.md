@@ -31,3 +31,13 @@ Hosted version 1 deployed successfully. The cloud browser reached the owner-only
 - Local browser verification used the production rental/editor components with isolated sample data and no booking writes. $80 rental + 3 tables at $10 + 20 chairs at $2 + $50 AV showed $200 and switched to facility approval. Facility price/quantity editing and disabling AV worked. The temporary verification route and exports were removed before packaging.
 - Search shows **Number of guests** with **Enter guest count**.
 - Automated email and payments remain disabled. Authenticated hosted browser submissions are not claimed as verified.
+# Independent private Cloudflare hosting — November 17, 2026
+
+- Passed TypeScript checks, the existing Sites build, the independent Cloudflare production build, and a Wrangler deployment dry run. These checks do not deploy to Carla's Cloudflare account.
+- Four signed-token test groups cover valid access, missing configuration, forged identity headers, wrong issuer/audience, expiration, tampered tokens and users outside the explicit pilot email list.
+- The built Worker was started locally. Unauthenticated requests with forged email/admin headers received 403 for `/`, `/signin`, `/api/marketplace`, the logo and venue images. Static assets pass through the private-access check.
+- The new account adapter, original pilot regression script and equipment-pricing regression script passed against the existing Supabase project inside rolled-back fixture transactions. Account tests preserve the original owner and renter IDs, reject uninvited users and editable-metadata role escalation, restrict facility bookings, deny payout review to facilities, and reject revoked sessions, bans and unconfirmed email.
+- Applied the backward-compatible database adapter and ran Supabase security advisors: no findings. Confirmed that no real Supabase Auth users were created and no payments were enabled.
+- After the adapter change, the existing hosted private pilot health check returned connected=true with seven facilities and paymentsEnabled=false. An identityless marketplace request still returned 401.
+- Not yet verified: the user's Cloudflare deployment, real Access login, runtime bindings and a real Supabase email/password sign-in. These require account setup and controlled end-to-end checks before DNS cutover. No domain, Site audience or payment setting was changed.
+

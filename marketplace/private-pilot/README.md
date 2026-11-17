@@ -6,6 +6,8 @@ Source home: `marketplace/private-pilot/` in [cway917/PrimeSpaces](https://githu
 
 Private deployment: https://primespaces-private-pilot.charter-one-3074.chatgpt.site
 
+Independent private Cloudflare hosting is prepared in the same source tree. See [CLOUDFLARE.md](CLOUDFLARE.md) for the exact repository build settings, required private Access configuration, Supabase account setup and verification limits. It does not switch the live domain or enable payments.
+
 ## Run and build
 
 Requires Node 22.13+ and npm. From this directory:
