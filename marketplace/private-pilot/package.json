@@ -16,7 +16,8 @@
     "build:cloudflare": "node scripts/prepare-assets.mjs && vite build --config vite.cloudflare.config.ts",
     "deploy:cloudflare": "wrangler deploy --config dist/server/wrangler.json",
     "test:hosting": "node --experimental-strip-types --test tests/private-access.test.mjs",
-    "test:hosting-runtime": "node tests/private-worker.test.mjs"
+    "test:hosting-runtime": "node tests/private-worker.test.mjs",
+    "test:hosting-assets": "node tests/authorized-assets.test.mjs"
   },
   "dependencies": {
     "@base-ui/react": "^1.7.0",

@@ -10,7 +10,14 @@ export default {
     }
     const clean = new Headers(request.headers);
     for (const name of [...clean.keys()]) if (name.toLowerCase().startsWith('oai-authenticated-user-')) clean.delete(name);
-    const response = await handler.fetch(new Request(request, { headers: clean }), env, ctx);
+    const authenticatedRequest = new Request(request, { headers: clean });
+    const isFrameworkAsset = new URL(request.url).pathname.startsWith('/_next/static/');
+    // With run_worker_first enabled, generated CSS and JS must go to the asset
+    // binding after Access verification. App Router treats these paths as 404s.
+    const assets = (env as unknown as { ASSETS: Fetcher }).ASSETS;
+    const response = isFrameworkAsset && ['GET', 'HEAD'].includes(request.method)
+      ? await assets.fetch(authenticatedRequest)
+      : await handler.fetch(authenticatedRequest, env, ctx);
     const secured = new Response(response.body, response);
     secured.headers.set('Cache-Control', 'private, no-store');
     secured.headers.set('X-Robots-Tag', 'noindex, nofollow');

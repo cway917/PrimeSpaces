@@ -41,3 +41,8 @@ Hosted version 1 deployed successfully. The cloud browser reached the owner-only
 - After the adapter change, the existing hosted private pilot health check returned connected=true with seven facilities and paymentsEnabled=false. An identityless marketplace request still returned 401.
 - Not yet verified: the user's Cloudflare deployment, real Access login, runtime bindings and a real Supabase email/password sign-in. These require account setup and controlled end-to-end checks before DNS cutover. No domain, Site audience or payment setting was changed.
 
+## Cloudflare stylesheet and JavaScript routing repair
+
+Reproduced an authenticated request for the generated stylesheet returning 404 while the HTML and venue images loaded. The independent Worker now sends `/_next/static/` GET/HEAD requests directly to its ASSETS binding after verifying private Access. This preserves the private gate while avoiding the App Router static-path 404.
+
+The production-build regression test uses local synthetic signed Access tokens and a mocked certificate endpoint, with no production secrets or real users. It verifies both marketplace and sign-in HTML, every referenced stylesheet and JavaScript entry/preload, and logo/venue images: authorized requests return 200 with appropriate MIME types; requests without Access remain 403. TypeScript and the existing Access validation tests also pass. The live signed-in browser result still requires the owner to refresh after the automatic Cloudflare deployment.
