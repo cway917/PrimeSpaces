@@ -1,7 +1,11 @@
 # Facility Services, Bundles & Local Pricing — Implementation Backlog
 
-Status: Proposed / not implemented. Owner: PrimeSpaces product team. Target: pilot launch, subject to prioritization.
+Status: Partially implemented in the private pilot (2026-11-17). Owner: PrimeSpaces product team. Target: pilot launch, subject to prioritization.
 Scope: Facility-specific add-ons, enterprise oversight, and ZIP-informed suggested prices. All prices are controlled by facility owners. ALA is a potential enterprise customer, not a confirmed account.
+
+## Implemented pilot subset
+
+The private pilot now supports per-facility tables, chairs and one AV package, with enabled flags, per-booking rates, quantity limits and descriptions. Renters see separate charges; selected equipment triggers facility review. Server pricing, stale-quote checks, frozen booking line items, monthly statements, admin review and CSV exports include add-ons. The 10% facility-side commission applies to rental plus selected extras; the renter platform fee remains $0 and payments remain disabled. Included/free equipment can be requested at $0. Sample prices appear only on sample facilities. Advanced service calendars, shared inventory, mandatory services, bundles, taxes, paid checkout, templates and pricing recommendations below remain backlog items.
 
 ## Product decisions
 - Optional services are enabled **per facility**, not globally; unavailable services must never appear in renter checkout.

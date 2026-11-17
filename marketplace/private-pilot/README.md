@@ -42,7 +42,7 @@ For a separate environment, review and apply `supabase/pilot-schema.sql`, config
 - Submit requests for manual review or reserve an available time under a facility's automatic approval policy. Rates, capacity, opening hours and conflicts are checked transactionally in Supabase. Facility locks serialize approvals and requests; request keys prevent duplicates.
 - Facility teams manage listings and hours, block/unblock time, approve/decline requests, and complete past events. Renters can cancel future requests/reservations.
 - Facility teams and admins can view/export consolidated monthly statements. Admins record holds, review notes and decisions in an audit trail before any future payout.
-- Commission is 10% of the base rental, deducted from facility proceeds. The renter platform fee is $0. Prices use integer cents and per-booking rounding.
+- Commission is 10% of the rental plus selected add-ons total, deducted from facility proceeds. The renter platform fee is $0. Prices use integer cents and per-booking rounding.
 
 ## Payment guard
 
@@ -50,7 +50,7 @@ This is an unpaid private pilot. There is no Stripe integration, payment action,
 
 ## Pilot scope and validation
 
-Arizona / America/Phoenix; single-day bookings of 1–12 hours within one year; one daily opening interval on selected weekdays; base hourly pricing. Sample facilities and bookings are labeled. Taxes, deposits, add-ons, insurance, agreements, notifications and payments remain future integrations. Editing opening hours does not cancel existing approved bookings.
+Arizona / America/Phoenix; single-day bookings of 1–12 hours within one year; one daily opening interval on selected weekdays; hourly rental pricing with optional tables, chairs and an AV package. Sample facilities and bookings are labeled. Taxes, deposits, other service types, insurance, agreements, notifications and payments remain future integrations. Editing opening hours does not cancel existing approved bookings.
 
 See `VALIDATION.md` for checks actually performed and browser verification limits. The existing `marketplace/db/001_foundation.sql` and architecture notes outside this folder describe the earlier foundation/future paid platform; they do not replace the deployed private-pilot schema.
 
@@ -59,3 +59,13 @@ Photos are illustrative Unsplash images, not photographs of participating facili
 ## Contact and inquiries
 
 All PrimeSpaces support, onboarding and listing inquiries go to **info@primespaces.org**. The shared destination is defined in `lib/contact.ts`. Contact links open an email draft addressed to this inbox. Automatic transactional notifications are not enabled; this update does not configure mailbox forwarding or change admin sign-in identities.
+
+## Tables, chairs and AV charges
+
+In **For facilities → Your spaces → Edit**, use **Optional rental add-ons** to enable tables, chairs and an AV package, set per-booking prices, quantity limits and descriptions. Tables and chairs are priced per item; AV is a flat package per booking. $0 means included equipment. Real listings start with these options disabled until the facility enters its own rates. The two sample spaces with add-ons use clearly labeled illustrative prices.
+
+Renters select quantities in the booking form and see separate line items before requesting. Equipment selections require facility approval even when a bare space supports automatic approval. The server checks enabled options and quantity limits, calculates prices from the facility catalog, rejects stale total quotes, and freezes line items on the booking. Later rate changes do not alter existing requests. Facility approval also checks that requested equipment is still offered at the requested quantity.
+
+`subtotal_cents` retains the space-only rental amount; `addons_total_cents` contains equipment charges and `total_cents` is their sum. The 10% commission applies to this combined total. Requests, statements, admin reviews and CSV exports retain the equipment breakdown. Payments remain disabled. Equipment inventory shared across spaces and separate staffing calendars are not implemented; the facility confirms fulfillment.
+
+`supabase/pilot-addons.sql` records the incremental schema/function update already applied to the existing project. Do not rerun it there. `supabase/verify-addons.sql` verifies the new pricing flow inside a rolled-back transaction.

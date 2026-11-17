@@ -22,3 +22,12 @@ Hosted version 1 deployed successfully. The cloud browser reached the owner-only
 - The repository-root homepage, CSS, script and original logo are preserved by content hash.
 - Runtime credentials, environment values, database connection values, user records and generated builds are excluded from the GitHub source transfer.
 - The previous deployed read-only connection check returned `connected=true`, six facilities and `paymentsEnabled=false`. Identity-less marketplace access returned HTTP 401.
+
+## Rental add-ons and guest-count clarification
+
+- Live Supabase tests passed for facility-specific rates, three separate equipment lines, totals, 10% facility-side commission on rental plus add-ons, price snapshots, duplicate retries, unavailable options, invalid/over-limit quantities, stale quote rejection, included/free items, organization isolation, completion and admin review. All test mutations rolled back.
+- Original booking workflow regression assertions passed. Security advisor returned no findings.
+- Two clearly marked sample listings received illustrative catalogs. The existing real Applied Technologies listing's prices were not changed.
+- Local browser verification used the production rental/editor components with isolated sample data and no booking writes. $80 rental + 3 tables at $10 + 20 chairs at $2 + $50 AV showed $200 and switched to facility approval. Facility price/quantity editing and disabling AV worked. The temporary verification route and exports were removed before packaging.
+- Search shows **Number of guests** with **Enter guest count**.
+- Automated email and payments remain disabled. Authenticated hosted browser submissions are not claimed as verified.
