@@ -1,24 +1,23 @@
-# PrimeSpaces website preview
+# PrimeSpaces marketplace
 
-A responsive static homepage prototype using the approved PrimeSpaces brand direction.
+The repository's `main` branch now serves an entry page that automatically opens the working, authenticated PrimeSpaces pilot.
 
-## Preview locally
+- Entry URL: https://cway917.github.io/PrimeSpaces/
+- Private application: https://primespaces-private-pilot.charter-one-3074.chatgpt.site/
+- Application source: [marketplace/private-pilot/](marketplace/private-pilot/README.md)
 
-Open `index.html` in a browser. For a local web server, from this directory run:
+The app retains the original PrimeSpaces logo and navy/teal brand. It supports searchable facilities, availability, booking requests, manual/automatic approval, the 10% facility-side commission and monthly admin review. Payments and transfers remain disabled.
 
-```bash
-python3 -m http.server 8000
-```
+## How this deployment works
 
-Then visit http://localhost:8000.
+GitHub Pages serves `index.html` and `marketplace-entry.js`. The entry forwards visitors to the existing private application, where the ChatGPT sign-in gate and database authorization remain in force. This is an entry-point change, not a GitHub Pages backend deployment or a public release of the marketplace.
 
-## Deployment
+The script uses a fixed destination and forwards only recognized application hashes. Existing links such as `#owners` and `#spaces` map to the facility hub and discovery page. A normal link and a no-JavaScript fallback are included.
 
-Upload the contents to a new GitHub repository and enable GitHub Pages from the repository root on your preferred branch.
+The server application uses the existing Supabase project and private runtime secrets. No credential, access-policy, database-schema or payment configuration is changed by this entry-point update. The previous static marketing homepage is preserved in Git history.
 
-## Before launch
+## Development
 
-- Replace illustrative external Unsplash photos with licensed/approved PrimeSpaces facility photos.
-- Confirm the contact email address in the listing inquiry button.
-- Connect search, listings, booking, payments, and insurance/compliance workflows to the actual platform. Search is currently a demonstrative interface only.
-- Replace the raster logo with a transparent vector logo once approved.
+Follow the [application README](marketplace/private-pilot/README.md) for installation, build, runtime configuration and validation limits. Changing application source on GitHub does not automatically redeploy the private host; application changes must go through the existing private deployment workflow.
+
+No browser-visible service-role keys or server secrets belong in this repository.
